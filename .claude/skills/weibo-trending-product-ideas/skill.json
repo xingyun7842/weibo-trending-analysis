@@ -1,0 +1,23 @@
+{
+  "name": "weibo-trending-product-ideas",
+  "displayName": "Weibo Trending Product Ideas",
+  "description": "Automated Weibo trending topics analysis and product idea generation system. Use this skill when Claude needs to: (1) Fetch and analyze Weibo hot search trends, (2) Generate product ideas based on trending topics, (3) Create comprehensive HTML reports with event timelines and innovation opportunities. Evaluates trends using an 80% interest + 20% utility scoring model. Ideal for product managers, entrepreneurs, and innovation teams looking to identify market opportunities from social media trends.",
+  "version": "1.0.0",
+  "invocation": {
+    "type": "user",
+    "command": "/weibo-trending-product-ideas"
+  },
+  "author": {
+    "name": "User"
+  },
+  "tags": ["analysis", "product", "trending", "weibo", "innovation"],
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch",
+      "Bash",
+      "Read",
+      "Write"
+    ]
+  }
+}

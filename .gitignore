@@ -1,0 +1,68 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+venv/
+env/
+ENV/
+
+# 敏感文件
+*.env
+.env.local
+*.key
+*.pem
+config.json
+
+# 报告文件（可选：取消注释以排除报告）
+# reports/*.html
+
+# 日志文件
+*.log
+*.jsonl
+weibo_monitor_log.jsonl
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-*
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 临时文件
+*.tmp
+*.bak
+*.swp
+*~
+
+# Node modules (如果有 npm 依赖)
+node_modules/
+
+# 测试文件
+.pytest_cache/
+.coverage
+htmlcov/
+
+# 嵌入的 Git 仓库
+ccstatusline/
+
+# Windows 保留文件名
+nul
