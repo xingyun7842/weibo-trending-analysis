@@ -386,6 +386,16 @@ def main():
         f.write(html_content)
 
     print(f"✅ HTML 报告已生成: {report_path}")
+
+    # 创建 latest.html 链接（用于 GitHub Pages）
+    latest_path = reports_dir / "latest.html"
+    try:
+        import shutil
+        shutil.copy2(report_path, latest_path)
+        print(f"✅ 最新报告链接已创建: {latest_path}")
+    except Exception as e:
+        print(f"⚠️  创建 latest.html 失败: {e}")
+
     print()
     print("=" * 60)
     print("✨ 分析完成！")

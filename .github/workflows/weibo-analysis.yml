@@ -19,6 +19,8 @@ jobs:
 
     permissions:
       contents: write  # 允许推送生成的报告
+      pages: write     # 允许部署到 GitHub Pages
+      id-token: write  # 允许 OIDC token
 
     steps:
       - name: Checkout repository
@@ -62,6 +64,18 @@ jobs:
           git push || echo "Nothing to push"
         continue-on-error: true
 
+      - name: Deploy to GitHub Pages
+        if: success()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./reports
+          publish_branch: gh-pages
+          force_orphan: true
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: 'Deploy: Weibo analysis report ${{ github.run_number }}'
+
       - name: Summary
         if: always()
         run: |
@@ -70,4 +84,7 @@ jobs:
           echo "**执行时间**: $(date +'%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
           echo "**分析热点数**: ${{ github.event.inputs.max_topics || '15' }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "查看生成的报告请访问 Actions Artifacts 下载" >> $GITHUB_STEP_SUMMARY
+          echo "### 📄 查看报告" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- 🌐 **在线查看**: https://xingyun7842.github.io/weibo-trending-analysis/" >> $GITHUB_STEP_SUMMARY
+          echo "- 📥 **下载报告**: 查看下方 Artifacts" >> $GITHUB_STEP_SUMMARY
