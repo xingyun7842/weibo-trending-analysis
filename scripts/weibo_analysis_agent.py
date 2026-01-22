@@ -27,7 +27,7 @@ def fetch_weibo_trends(api_key: str) -> list:
     """
     获取微博热搜数据
     """
-    print("📡 正在获取微博热搜数据...")
+    print("Fetching Weibo trending data...")
 
     try:
         response = requests.get(
@@ -61,13 +61,13 @@ def analyze_trends_with_claude(trends: list, anthropic_api_key: str) -> dict:
 
     if ANTHROPIC_BASE_URL:
         client_kwargs["base_url"] = ANTHROPIC_BASE_URL
-        print(f"🌐 使用第三方 API 端点: {ANTHROPIC_BASE_URL}")
+        print(f"Using custom API endpoint: {ANTHROPIC_BASE_URL}")
 
     client = Anthropic(**client_kwargs)
 
     # 准备分析数据
     trends_to_analyze = trends[:MAX_TOPICS]
-    print(f"\n🔍 开始分析前 {len(trends_to_analyze)} 个热点...\n")
+    print(f"\nAnalyzing top {len(trends_to_analyze)} trends...\n")
 
     # 构建 prompt
     trends_text = "\n".join([
@@ -126,9 +126,9 @@ def analyze_trends_with_claude(trends: list, anthropic_api_key: str) -> dict:
 - 只返回 JSON，不要其他文字说明
 """
 
-    print(f"🤖 正在调用 Claude API 进行深度分析...")
-    print(f"📋 使用模型: {ANTHROPIC_MODEL}")
-    print("⏳ 这可能需要 1-2 分钟，请耐心等待...\n")
+    print(f"Calling Claude API for analysis...")
+    print(f"Using model: {ANTHROPIC_MODEL}")
+    print("This may take 1-2 minutes, please wait...\n")
 
     try:
         response = client.messages.create(
@@ -166,7 +166,7 @@ def analyze_trends_with_claude(trends: list, anthropic_api_key: str) -> dict:
                         if MIN_SCORE_GOOD <= t.get("best_score", 0) < MIN_SCORE_EXCELLENT)
         total_ideas = sum(len(t.get("product_ideas", [])) for t in analysis_result.get("trends", []))
 
-        print(f"📊 分析统计:")
+        print(f"Analysis Statistics:")
         print(f"   - 总计分析: {len(analysis_result.get('trends', []))} 个热点")
         print(f"   - 优秀创意 (≥{MIN_SCORE_EXCELLENT}分): {excellent_count} 个")
         print(f"   - 良好创意 ({MIN_SCORE_GOOD}-{MIN_SCORE_EXCELLENT-1}分): {good_count} 个")
@@ -187,7 +187,7 @@ def generate_html_report(analysis_data: dict) -> str:
     """
     生成 HTML 分析报告
     """
-    print("📝 正在生成 HTML 报告...")
+    print("Generating HTML report...")
 
     # 读取模板
     template_path = Path(__file__).parent.parent / ".claude" / "skills" / "weibo-trending-product-ideas" / "template.html"
@@ -344,7 +344,7 @@ def main():
     主函数
     """
     print("=" * 60)
-    print("🚀 微博热搜产品创意分析 - GitHub Actions 版本")
+    print("Weibo Trending Analysis - GitHub Actions Version")
     print("=" * 60)
     print()
 
