@@ -326,9 +326,11 @@ def generate_html_report(analysis_data: dict) -> str:
         </div>
         """
 
-    # 替换模板变量
-    current_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    html_content = html_template.replace("{CURRENT_DATE}", current_date)
+    # 替换模板变量 (使用北京时间 UTC+8)
+    from datetime import timezone, timedelta
+    beijing_tz = timezone(timedelta(hours=8))
+    current_date = datetime.now(timezone.utc).astimezone(beijing_tz).strftime("%Y-%m-%d %H:%M:%S")
+    html_content = html_template.replace("{CURRENT_DATE}", current_date + " (北京时间)")
     html_content = html_content.replace("{STATS_BAR}", stats_html)
     html_content = html_content.replace("{TREND_ITEMS}", trend_items_html)
     html_content = html_content.replace("{TOTAL_TRENDS}", str(len(trends)))
