@@ -75,7 +75,14 @@ def analyze_trends_with_claude(trends: list, anthropic_api_key: str) -> dict:
         for i, trend in enumerate(trends_to_analyze)
     ])
 
+    # 获取当前日期（北京时间）
+    from datetime import timezone, timedelta
+    beijing_tz = timezone(timedelta(hours=8))
+    current_date = datetime.now(timezone.utc).astimezone(beijing_tz).strftime("%Y-%m-%d")
+
     prompt = f"""你是一位专业的产品分析师，擅长从社交媒体趋势中发现创新机会。
+
+**当前日期：{current_date}（北京时间）**
 
 请分析以下微博热搜话题，为每个话题生成产品创意：
 
@@ -123,6 +130,7 @@ def analyze_trends_with_claude(trends: list, anthropic_api_key: str) -> dict:
 - 评分要客观公正
 - 产品创意要具有可行性
 - 背景分析要基于常识和逻辑推理
+- **时间线必须基于当前日期 {current_date}，使用"今日"、"近期"、"本周"等相对表述，不要编造具体的历史日期**
 - 只返回 JSON，不要其他文字说明
 """
 
